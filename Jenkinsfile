@@ -1,6 +1,6 @@
 pipeline {
     
-    agent any
+    agent any 
 
     stages{
 
@@ -21,6 +21,8 @@ pipeline {
         stage("Push to Dockerhub"){
             steps{
                 echo "Push to Dockerhub"
+                withCredentials([usernamePassword(credentialsId:"docker-cred",passwordVariable:"dockercredPass",usernameVariable:"dockercredUser")])
+                sh "docker login -u ${env.dockercredUser} -p ${env.dockercredPass}"
             }
         }
 
